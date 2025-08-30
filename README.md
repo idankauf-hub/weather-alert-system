@@ -14,11 +14,11 @@ Users can register/login, add alerts (by city or coordinates), and see when thei
 - 📡 Alerts:
   - Save by **city** or **lat/lon**
   - Parameters: temperature / wind speed / precipitation
-  - Operators: `gt`, `gte`, `lt`, `lte`, `eq`
+  - Operators: `>`, `>=`, `<`, `<=`, `=`
   - Threshold value
 - 📊 Alert evaluation:
-  - Manual "Check now"
-  - Automatic scanning (cron/interval via BullMQ)
+  - Automatic background scanning (via BullMQ + Redis)
+  - One-click evaluation from the UI
 - 🖥️ Frontend UI (React + MUI + React Query)
   - Create alerts
   - See saved alerts (per user)
@@ -128,9 +128,8 @@ All requests except `/auth/*` require `Authorization: Bearer <token>`.
   * Trigger evaluation
   * Delete
 * Current state page:
-
-  * View triggered alerts
-  * Refresh manually
+  * View currently triggered alerts
+  * Refresh to fetch latest triggered state
 
 ---
 
