@@ -149,5 +149,3 @@ All requests except `/auth/*` require `Authorization: Bearer <token>`.
 2. Add an alert (`temperature gt 30` for `Tel Aviv`).
 3. Wait for scan.
 4. Go to "Current State" page → see if triggered.
-
-
