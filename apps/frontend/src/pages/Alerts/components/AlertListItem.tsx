@@ -7,10 +7,12 @@ import Spinner from '../../../components/Spinner';
 import Toast from '../../../components/Toast';
 import { useDeleteAlert, useEvaluateAlert } from '../../../hooks/useAlerts';
 import { getErrMsg } from '../../../lib/errors';
+import type { Alert } from '../../../lib/alerts';
+import { OPS_MAP } from '../../../lib/alertConsts';
 
 
 type Props = {
-    alert: any;
+    alert: Alert;
     isTriggered: boolean;
 };
 
@@ -27,7 +29,7 @@ export default function AlertListItem({ alert, isTriggered }: Props) {
         setEvaluating(true);
         evaluate.mutate(alert._id, {
             onSuccess: () => setToast({ open: true, msg: 'Checked', type: 'success' }),
-            onError: (e: any) => setToast({ open: true, msg: getErrMsg(e), type: 'error' }),
+            onError: (e: unknown) => setToast({ open: true, msg: getErrMsg(e), type: 'error' }),
             onSettled: () => setEvaluating(false),
         });
     };
@@ -35,9 +37,11 @@ export default function AlertListItem({ alert, isTriggered }: Props) {
     const onDelete = () => {
         del.mutate(alert._id, {
             onSuccess: () => setToast({ open: true, msg: 'Alert deleted', type: 'success' }),
-            onError: (e: any) => setToast({ open: true, msg: getErrMsg(e), type: 'error' }),
+            onError: (e: unknown) => setToast({ open: true, msg: getErrMsg(e), type: 'error' }),
         });
     };
+
+    const opLabel = OPS_MAP.find(o => o.value === alert.threshold.op)?.label ?? alert.threshold.op;
 
     return (
         <>
@@ -45,7 +49,7 @@ export default function AlertListItem({ alert, isTriggered }: Props) {
                 <CardContent sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
                     <Typography sx={{ minWidth: 200 }}>{alert.name || 'unnamed'}</Typography>
                     <Typography sx={{ opacity: 0.8 }}>
-                        {alert.parameter} {alert.threshold.op} {alert.threshold.value}
+                        {alert.parameter} {opLabel} {alert.threshold.value}
                     </Typography>
                     <Typography sx={{ opacity: 0.8 }}>
                         {alert.city ? `city: ${alert.city}` : `(${alert.lat}, ${alert.lon})`}

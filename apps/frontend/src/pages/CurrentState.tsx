@@ -1,8 +1,8 @@
-
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { Button, Card, CardContent, Stack, Tooltip, Typography } from '@mui/material';
 import Spinner from '../components/Spinner';
 import { useCurrentStates } from '../hooks/useStates';
+import { OPS_MAP } from '../lib/alertConsts';
 
 export default function CurrentState() {
     const { data, isLoading, isError, error, refetch, isFetching, dataUpdatedAt } = useCurrentStates();
@@ -45,22 +45,25 @@ export default function CurrentState() {
                 </Card>
             )}
 
-            {data?.map(item => (
-                <Card key={item.alert._id}>
-                    <CardContent sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-                        <Typography sx={{ minWidth: 200 }}>{item.alert.name || 'unnamed'}</Typography>
-                        <Typography sx={{ opacity: 0.8 }}>
-                            {item.alert.parameter} {item.alert.threshold.op} {item.alert.threshold.value}
-                        </Typography>
-                        <Typography sx={{ opacity: 0.8 }}>
-                            {item.alert.city ? `city: ${item.alert.city}` : `(${item.alert.lat}, ${item.alert.lon})`}
-                        </Typography>
-                        <Typography sx={{ ml: 'auto', opacity: 0.8 }}>
-                            observed: {item.state.observedValue} • {new Date(item.state.checkedAt).toLocaleString()}
-                        </Typography>
-                    </CardContent>
-                </Card>
-            ))}
+            {data?.map(item => {
+                const opLabel = OPS_MAP.find(o => o.value === item.alert.threshold.op)?.label ?? item.alert.threshold.op
+                return (
+                    <Card key={item.alert._id}>
+                        <CardContent sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                            <Typography sx={{ minWidth: 200 }}>{item.alert.name || 'unnamed'}</Typography>
+                            <Typography sx={{ opacity: 0.8 }}>
+                                {item.alert.parameter} {opLabel} {item.alert.threshold.value}
+                            </Typography>
+                            <Typography sx={{ opacity: 0.8 }}>
+                                {item.alert.city ? `city: ${item.alert.city}` : `(${item.alert.lat}, ${item.alert.lon})`}
+                            </Typography>
+                            <Typography sx={{ ml: 'auto', opacity: 0.8 }}>
+                                observed: {item.state.observedValue} • {new Date(item.state.checkedAt).toLocaleString()}
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                )
+            })}
         </Stack>
     );
 }
