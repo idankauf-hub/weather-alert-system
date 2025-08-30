@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ./apps/backend
+    env_file: .env
+    environment:
+      MONGO_URI: ${MONGO_URI:-mongodb://mongo:27017/weather}
+      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_PORT: ${REDIS_PORT:-6379}
+      JWT_SECRET: ${JWT_SECRET:-dev-secret}
+      TOMORROW_API_KEY: ${TOMORROW_API_KEY:-replace-me}
+      ALERT_SCAN_EVERY_MS: ${ALERT_SCAN_EVERY_MS:-60000}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+      - redis
+
+  frontend:
+    build: ./apps/frontend
+    environment:
+      VITE_API_BASE: ${VITE_API_BASE:-http://backend:3000}
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
