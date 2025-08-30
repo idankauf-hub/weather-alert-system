@@ -40,7 +40,7 @@ Users can register/login, add alerts (by city or coordinates), and see when thei
 ### 1. Clone the repo
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/idankauf-hub/weather-alert-system
 cd Weather
 ````
 
