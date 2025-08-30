@@ -2,11 +2,11 @@ import AddAlertIcon from '@mui/icons-material/AddAlert';
 import DeleteIcon from '@mui/icons-material/Delete';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { Card, CardContent, IconButton, Tooltip, Typography } from '@mui/material';
-import type { useState } from 'react';
+import { useState } from 'react';
 import Spinner from '../../../components/Spinner';
 import Toast from '../../../components/Toast';
 import { useDeleteAlert, useEvaluateAlert } from '../../../hooks/useAlerts';
-import type { getErrMsg } from '../../../lib/errors';
+import { getErrMsg } from '../../../lib/errors';
 
 
 type Props = {
