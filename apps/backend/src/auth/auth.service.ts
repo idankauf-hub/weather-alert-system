@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 
@@ -16,7 +16,10 @@ export class AuthService {
   }
 
   async login(email: string) {
-    const user = await this.users.findOrCreateByEmail(email);
+    const user = await this.users.findByEmail(email);
+    if (!user) {
+      throw new UnauthorizedException('User does not exist. Please register.');
+    }
     const token = await this.sign(user._id.toString(), user.email, user.name);
     return { token, user };
   }
