@@ -62,8 +62,7 @@ JWT_EXPIRES_IN=7d
 VITE_API_BASE=http://backend:3000
 ```
 
-You’ll need a **Tomorrow\.io API key** — free tier works.
-
+**You’ll need a Tomorrow\.io API key** - free tier works.
 ---
 
 ## ▶️ Run Locally
