@@ -11,7 +11,11 @@ export const REDIS = Symbol('REDIS');
       provide: REDIS,
       inject: [ConfigService],
       useFactory: (cfg: ConfigService) => {
-        const client = new Redis(cfg.get<string>('REDIS_URL')!, {
+        const redisUrl = cfg.get<string>('REDIS_URL');
+        if (!redisUrl) {
+          throw new Error('REDIS_URL is not defined in configuration');
+        }
+        const client = new Redis(redisUrl, {
           lazyConnect: true,
           maxRetriesPerRequest: 3,
         });

@@ -3,9 +3,13 @@ import { Stack, TextField, Button, Typography } from '@mui/material';
 import { useWeather } from '../hooks/useWeather';
 import WeatherCard from '../components/WeatherCard';
 
+
+const DEFAULT_LAT = '32.0853';
+const DEFAULT_LON = '34.7818';
+
 export default function Home() {
-    const [latInput, setLatInput] = useState('32.0853');
-    const [lonInput, setLonInput] = useState('34.7818');
+    const [latInput, setLatInput] = useState(DEFAULT_LAT);
+    const [lonInput, setLonInput] = useState(DEFAULT_LON);
     const [coords, setCoords] = useState({ lat: 32.0853, lon: 34.7818 });
 
     const { data, isFetching, error } = useWeather(coords.lat, coords.lon);

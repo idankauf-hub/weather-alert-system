@@ -1,7 +1,7 @@
 
-import { Button, Card, CardContent, Stack, Typography, Tooltip } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import CircularProgress from '@mui/material/CircularProgress';
+import { Button, Card, CardContent, Stack, Tooltip, Typography } from '@mui/material';
+import Spinner from '../components/Spinner';
 import { useCurrentStates } from '../hooks/useStates';
 
 export default function CurrentState() {
@@ -23,7 +23,7 @@ export default function CurrentState() {
                             variant="outlined"
                             onClick={() => refetch()}
                             disabled={isFetching}
-                            startIcon={isFetching ? <CircularProgress size={16} /> : <RefreshIcon />}
+                            startIcon={isFetching ? <Spinner /> : <RefreshIcon />}
                         >
                             {isFetching ? 'Refreshing…' : 'Refresh'}
                         </Button>
@@ -35,12 +35,14 @@ export default function CurrentState() {
             {isError && <Typography color="error">{String(error)}</Typography>}
 
             {!isLoading && !isError && (!data || data.length === 0) && (
-                <Card><CardContent>
-                    <Typography variant="h5">All Clear</Typography>
-                    <Typography variant="body2" sx={{ opacity: 0.8 }}>
-                        No alerts are currently triggered.
-                    </Typography>
-                </CardContent></Card>
+                <Card>
+                    <CardContent>
+                        <Typography variant="h5">All Clear</Typography>
+                        <Typography variant="body2" sx={{ opacity: 0.8 }}>
+                            No alerts are currently triggered.
+                        </Typography>
+                    </CardContent>
+                </Card>
             )}
 
             {data?.map(item => (

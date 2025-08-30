@@ -7,7 +7,7 @@ import Spinner from './components/Spinner';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Home from './pages/Home';
 import SignIn from './pages/SignIn';
-import Alerts from './pages/Alerts';
+import Alerts from './pages/Alerts/Alerts';
 import CurrentState from './pages/CurrentState';
 
 const qc = new QueryClient();

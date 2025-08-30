@@ -12,7 +12,7 @@ import { AuthController } from './auth.controller';
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (cfg: ConfigService) => ({
-        secret: cfg.get<string>('JWT_SECRET') ?? 'dev_secret_change_me',
+        secret: cfg.get<string>('JWT_SECRET'),
         signOptions: { expiresIn: cfg.get<string>('JWT_EXPIRES_IN') ?? '7d' },
       }),
     }),
