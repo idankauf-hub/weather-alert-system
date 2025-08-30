@@ -52,17 +52,27 @@ Copy `.env.example` to `.env` (or create manually):
 # ===== Backend =====
 MONGO_URI=mongodb://mongo:27017/weather
 REDIS_URL=redis://redis:6379
-ALERT_SCAN_CRON=*/5 * * * *    # every 5 minutes (UTC)
-ALERT_SCAN_EVERY_MS=60000      # or every minute (override CRON)
-TOMORROW_API_KEY=your-key-here
+
+# REQUIRED: Tomorrow.io API key
+# Sign up at https://www.tomorrow.io/ to get a free key
+TOMORROW_API_KEY=your-api-key-here
+
+# Background scanning (optional overrides)
+ALERT_SCAN_CRON=*/5 * * * *    # run scan every 5 minutes (UTC)
+ALERT_SCAN_EVERY_MS=60000      # OR every 60s, overrides cron if set
+
+# JWT (auth)
+# These defaults will work as-is, but you may change if needed
 JWT_SECRET=super-secret
 JWT_EXPIRES_IN=7d
 
 # ===== Frontend =====
 VITE_API_BASE=http://backend:3000
+
 ```
 
-**You’ll need a Tomorrow\.io API key** - free tier works.
+**Required: only TOMORROW_API_KEY must be replaced with a real value.
+All others have safe defaults — you can leave them as-is unless you want to customize.**
 
 ---
 
